@@ -78,6 +78,11 @@ h3 {
     align-items: center;
     gap: 1rem;
 }
+.head {
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #a7a7a7;
+}
 .attr {
     display: flex;
     justify-content: center;
@@ -94,12 +99,16 @@ h3 {
     }
 }
 
+.pulse::after {
+    animation: pulse 900ms ease-in-out infinite;
+}
+
 // MAIN STYLES
 
 .dict-main {
     background-color: var(--clr-blue);
     padding-top: 5rem;
-    padding-bottom: 2rem;
+    padding-bottom: 3rem;
     color: white;
 }
 
@@ -130,12 +139,49 @@ h3 {
 .pronunciation {
     font-weight: 600;
 }
+.definition-others {
+    height: 0rem;
+    opacity: 0;
+    transition: transform 500ms ease-in-out, height 500ms linear,
+        opacity 1100ms ease-in-out;
+    transform: translateY(3rem);
+
+    .head {
+        color: #c59797;
+    }
+}
+.show {
+    .definition-others {
+        height: 12rem;
+        opacity: 1;
+        transform: translateY(0rem);
+    }
+    + .more-definition {
+        // height:  dynamically find height of .definition-others;
+        transform: rotate(180deg);
+    }
+}
 
 .more-definition {
     position: absolute;
     right: 0;
-    bottom: -3.5625rem;
-    z-index: 2;
+    bottom: -4.5625rem;
+    z-index: 5;
+    transition: transform 750ms ease-in-out;
+
+    &::after {
+        content: " ";
+        background-color: var(--clr-red);
+        opacity: 0;
+        position: absolute;
+        border-radius: 100vw;
+        z-index: -1;
+        top: 0;
+        transform: scale(1);
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
 }
 
 .dict-extra {
@@ -145,8 +191,6 @@ h3 {
     box-shadow: 8px 0 10px -9px var(--clr-gray),
         -8px 0 10px -9px var(--clr-gray);
     .head {
-        text-transform: uppercase;
-        font-weight: 600;
         color: #a7a7a7;
     }
 }
@@ -155,7 +199,7 @@ h3 {
     // background-color: red;
 
     &:not(:last-child) {
-        border-bottom: 1px solid var(--clr-gray);
+        border-bottom: 1px solid var(--clr-light-gray);
         padding-bottom: 2rem;
     }
 }
@@ -179,5 +223,17 @@ h3 {
 
     100% {
         transform: scale(1);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.5);
     }
 }
