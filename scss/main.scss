@@ -147,7 +147,7 @@ h3 {
     .head {
         text-transform: uppercase;
         font-weight: 600;
-        color: var(--clr-gray);
+        color: #a7a7a7;
     }
 }
 
@@ -165,6 +165,7 @@ h3 {
     border-top: 2px solid whitesmoke;
     box-shadow: 8px 8px 10px -9px var(--clr-light-gray),
         -8px 8px 10px -6px var(--clr-light-gray);
+    text-transform: capitalize;
 }
 
 @keyframes heartbeat {

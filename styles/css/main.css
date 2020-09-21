@@ -171,7 +171,7 @@ h3 {
 .dict-extra .head {
   text-transform: uppercase;
   font-weight: 600;
-  color: var(--clr-gray);
+  color: #a7a7a7;
 }
 
 .cards:not(:last-child) {
@@ -184,6 +184,7 @@ h3 {
   border-top: 2px solid whitesmoke;
   -webkit-box-shadow: 8px 8px 10px -9px var(--clr-light-gray), -8px 8px 10px -6px var(--clr-light-gray);
           box-shadow: 8px 8px 10px -9px var(--clr-light-gray), -8px 8px 10px -6px var(--clr-light-gray);
+  text-transform: capitalize;
 }
 
 @-webkit-keyframes heartbeat {
