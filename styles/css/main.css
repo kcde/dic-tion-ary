@@ -176,6 +176,7 @@ h3 {
 
 .pronunciation {
   font-weight: 600;
+  letter-spacing: 0.1rem;
 }
 
 .definition-others {
