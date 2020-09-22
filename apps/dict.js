@@ -1,7 +1,7 @@
 // this file contains all dictionary words arrays needed
 //url format : https://www.dictionaryapi.com/api/v3/references/collegiate/json/(WORD TO FIND)?key= API-KEY
 const inputWord = document.querySelector(".word-input");
-let word = "incred";
+let word = "indeed";
 const url = "https://www.dictionaryapi.com/api/v3/references/";
 const thes = "thesaurus/json";
 const colg = "collegiate/json";
@@ -45,13 +45,13 @@ const dictReq = async () => {
 };
 
 // getting the parts of speech
-const renderPos = (defArr) => {
+const getPos = (defArr) => {
     const pos = defArr[0].fl;
     return pos;
 };
 
 // getting array of definitions
-const renderDefs = (defArr) => {
+const getDefs = (defArr) => {
     const defs = [];
     defArr[0].shortdef.forEach((def) => {
         defs.push(def);
@@ -60,7 +60,7 @@ const renderDefs = (defArr) => {
 };
 
 // getting array of synonyms
-const renderSyns = (defArr) => {
+const getSyns = (defArr) => {
     const synArr = [];
     defArr[0].meta.syns[0].forEach((syn) => {
         synArr.push(syn);
@@ -69,7 +69,7 @@ const renderSyns = (defArr) => {
 };
 
 // getting array of antonyms
-const renderAnts = (defArr) => {
+const getAnts = (defArr) => {
     const antArr = [];
     defArr[0].meta.ants[0].forEach((ant) => {
         antArr.push(ant);
@@ -78,7 +78,7 @@ const renderAnts = (defArr) => {
 };
 
 // getting word pronunciation
-const renderPron = (defArr) => {
+const getPron = (defArr) => {
     const defs = defArr[0].hwi.prs[0].mw;
     return defs;
 };
@@ -91,13 +91,8 @@ const getExamples = (defArr) => {
 
 thesReq().then((r) => {
     console.log(r);
-    console.log(renderPos(r));
-    console.log(renderDefs(r));
-    console.log(renderSyns(r));
-    console.log(renderAnts(r));
-    console.log(getExamples(r));
 });
 
 dictReq().then((r) => {
-    console.log(renderPron(r));
+    console.log(getPron(r));
 });
