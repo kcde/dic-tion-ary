@@ -1,7 +1,7 @@
 // this file contains all dictionary words arrays needed
 //url format : https://www.dictionaryapi.com/api/v3/references/collegiate/json/(WORD TO FIND)?key= API-KEY
 const inputWord = document.querySelector(".word-input");
-let word = "indeed";
+let word = "lack";
 const url = "https://www.dictionaryapi.com/api/v3/references/";
 const thes = "thesaurus/json";
 const colg = "collegiate/json";
@@ -85,14 +85,11 @@ const getPron = (defArr) => {
 
 // getting examples
 const getExamples = (defArr) => {
-    const exaArr = defArr[0].def[0].sseq[0][0][1].dt[1][1][0];
+    const exaArr = defArr[0].def[0].sseq[0][0][1].dt[1][1];
     return exaArr;
 };
 
 thesReq().then((r) => {
-    console.log(r);
-});
-
-dictReq().then((r) => {
-    console.log(getPron(r));
+    g = getExamples(r);
+    // console.log(g);
 });
