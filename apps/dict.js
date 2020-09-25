@@ -89,6 +89,6 @@ const getPron = (defArr) => {
 
 // getting examples
 const getExamples = (defArr) => {
-    const exaArr = defArr[0].def[0].sseq[0][0][1].dt[1][1];
+    const exaArr = defArr[0].def[0].sseq[0][0][1].dt[1][1][0].t;
     return exaArr;
 };

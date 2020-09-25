@@ -57,25 +57,25 @@ const renderPos = () => {
 //rendering definitions
 const renderDef = () => {
     thesReq().then((objArr) => {
-        const defArr = getDefs(objArr);
-        const otherArr = defArr.slice(1);
+        let defArr = getDefs(objArr);
         defInitial.innerHTML = `<p>${defArr[0]}</p>`;
+        console.log(defArr);
         if (defArr.length > 1) {
-            moreDefBtn.classList.add("pulse");
-            moreDefBtn.disabled = false;
+            const otherArr = defArr.slice(1);
+
             otherArr.forEach((others) => {
                 otherDefs.appendChild(createHtmlWithContent("p", others));
             });
-
+            // moreDefBtn.disabled = false;
+            moreDefBtn.classList.add("pulse");
+            moreDefBtn.disabled = false;
             moreDefBtn.addEventListener("click", () => {
-                if (moreDefBtn.classList.contains("pulse")) {
-                    moreDefBtn.classList.remove("pulse");
-                    wordInfo.classList.add("show");
-                } else {
-                    moreDefBtn.classList.add("pulse");
-                    wordInfo.classList.remove("show");
-                }
+                moreDefBtn.classList.toggle("pulse");
+                wordInfo.classList.toggle("show");
             });
+        } else {
+            otherDefs.innerHTML = "";
+            moreDefBtn.disabled = true;
         }
     });
 };
@@ -90,22 +90,17 @@ const renderPro = () => {
 //rendering examples
 const renderExa = () => {
     thesReq().then((objArr) => {
-        let example = getExamples(objArr)[0].t;
-        example.split(" ").forEach((el) => {
-            if (el[0] === "{") {
-                const replaceRegex = /\{|\}|\{}/gi;
-                let f = el.replace(replaceRegex, "");
-                console.log(f);
-                // LEARN REGULAR EXPRESSION
-            }
-        });
-        console.log(example.split(" "));
+        let examples = getExamples(objArr);
+
+        const replaceRegex = /[{][/\w]\w+[}]/gi; ///\{|\}|\{}/gi;
+        let replace = examples.replace(replaceRegex, `  **  `);
+        console.log(replace);
+        // LEARN REGULAR EXPRESSION
 
         console.log(objArr);
-        // example.innerHTML = `<p>${examplesObj[0].t}</p>`;
+        example.innerHTML = `<p>${replace}</p>`;
     });
 };
-
 //rendering synonyms
 const renderSyns = () => {
     thesReq().then((objArr) => {
@@ -146,11 +141,11 @@ const renderAnts = () => {
 //rendering all render functions
 const renderAll = () => {
     renderWord();
-
+    renderExa();
     renderPos();
     renderPro();
     renderDef();
-    // renderExa();
+    renderExa();
     renderSyns();
     renderAnts();
 };
@@ -160,12 +155,13 @@ const renderAll = () => {
 //event listener for submit button
 searchBar.addEventListener("submit", (e) => {
     e.preventDefault();
+    wordInfo.classList.remove("show");
     clearAll(); // clear all content whenever the submit button is click
+
     if (inputWord.value === null) {
         return;
     }
 
     renderAll();
-    console.log(inputWord.value);
     inputWord.value = "";
 });
