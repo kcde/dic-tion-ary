@@ -37,6 +37,7 @@ const dictReq = async () => {
             const jsonResponse = await response.json();
             return jsonResponse;
         }
+        throw new Error("Request Failed");
     } catch (error) {
         console.log(error);
     }

@@ -10,9 +10,11 @@ const moreDefBtn = document.querySelector(".more-definition");
 const wordInfo = document.querySelector(".word-info");
 const searchBar = document.querySelector(".search-bar");
 const searchBtn = document.querySelector(".search-btn");
+moreDefBtn.disabled = true;
+
+const clearAll = () => {};
 
 // function to create html element with content
-
 const createHtmlWithContent = (tag, content, newClass = " ") => {
     const newTag = document.createElement(tag);
     if (newClass !== " ") {
@@ -22,10 +24,8 @@ const createHtmlWithContent = (tag, content, newClass = " ") => {
 
     return newTag;
 };
-moreDefBtn.addEventListener("click", () => {
-    wordInfo.classList.toggle("show");
-});
 
+//rendering word
 const renderWord = () => {
     thesReq().then((objArr) => {
         word = getWord(objArr);
@@ -33,32 +33,45 @@ const renderWord = () => {
     });
 };
 
+// rendering part of speech
 const renderPos = () => {
     thesReq().then((objArr) => {
         thePos.innerHTML = getPos(objArr);
     });
 };
 
+//rendering definitions
 const renderDef = () => {
     thesReq().then((objArr) => {
         const defArr = getDefs(objArr);
         const otherArr = defArr.slice(1);
         defInitial.innerHTML = `<p>${defArr[0]}</p>`;
         if (defArr.length > 1) {
+            moreDefBtn.disabled = false;
             otherArr.forEach((others) => {
                 moreDef.innerHTML = "";
                 moreDef.appendChild(createHtmlWithContent("p", others));
             });
             moreDefBtn.classList.add("pulse");
+            moreDefBtn.addEventListener("click", () => {
+                if (moreDefBtn.classList.contains("pulse")) {
+                    moreDefBtn.classList.remove("pulse");
+                } else {
+                    moreDefBtn.classList.add("pulse");
+                }
+            });
         }
     });
 };
 
+// rendering pronunciations
 const renderPro = () => {
     dictReq().then((objArr) => {
-        pronunciation.innerHTML = getPron(objArr);
+        pronunciation.innerHTML = `/ ${getPron(objArr)} /`;
     });
 };
+
+//rendering examples
 const renderExa = () => {
     thesReq().then((objArr) => {
         let example = getExamples(objArr)[0].t;
@@ -77,8 +90,7 @@ const renderExa = () => {
     });
 };
 
-// renderExa();
-
+//rendering synonyms
 const renderSyns = () => {
     thesReq().then((objArr) => {
         const fullSyns = getSyns(objArr);
@@ -98,6 +110,7 @@ const renderSyns = () => {
     });
 };
 
+//rendering antonyms
 const renderAnts = () => {
     thesReq().then((objArr) => {
         const fullAnts = getAnts(objArr);
@@ -114,8 +127,10 @@ const renderAnts = () => {
     });
 };
 
+//rendering all render functions
 const renderAll = () => {
     renderWord();
+
     renderPos();
     renderPro();
     renderDef();
@@ -126,14 +141,15 @@ const renderAll = () => {
 
 /* ::::::::::::::::::::::::::::::::::::::::::: */
 
+//event listener for submit button
 searchBar.addEventListener("submit", (e) => {
     e.preventDefault();
+    clearAll(); // clear all content whenever the submit button is click
     if (inputWord.value === null) {
         return;
     }
 
     renderAll();
-
     console.log(inputWord.value);
     inputWord.value = "";
 });
