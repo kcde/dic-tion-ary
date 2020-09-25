@@ -1,7 +1,7 @@
 const theWord = document.querySelector(".the-word");
 const thePos = document.querySelector(".pos");
 const defInitial = document.querySelector(".definition-initial");
-const moreDef = document.querySelector(".definition-others");
+const otherDefs = document.querySelector(".other-defs");
 const example = document.querySelector(".example");
 const synonyms = document.querySelector(".syn-words");
 const antonyms = document.querySelector(".anto-words");
@@ -12,7 +12,17 @@ const searchBar = document.querySelector(".search-bar");
 const searchBtn = document.querySelector(".search-btn");
 moreDefBtn.disabled = true;
 
-const clearAll = () => {};
+const clearAll = () => {
+    theWord.innerHTML = "";
+    thePos.innerHTML = "";
+    defInitial.innerHTML = "";
+    otherDefs.innerHTML = "";
+    moreDefBtn.classList.remove("pulse");
+    pronunciation.innerHTML = "";
+    // example.innerHTML = '';
+    synonyms.innerHTML = "";
+    antonyms.innerHTML = "";
+};
 
 // function to create html element with content
 const createHtmlWithContent = (tag, content, newClass = " ") => {
@@ -36,7 +46,11 @@ const renderWord = () => {
 // rendering part of speech
 const renderPos = () => {
     thesReq().then((objArr) => {
-        thePos.innerHTML = getPos(objArr);
+        if (getPos(objArr) === undefined) {
+            return;
+        } else {
+            thePos.innerHTML = getPos(objArr);
+        }
     });
 };
 
@@ -47,17 +61,19 @@ const renderDef = () => {
         const otherArr = defArr.slice(1);
         defInitial.innerHTML = `<p>${defArr[0]}</p>`;
         if (defArr.length > 1) {
+            moreDefBtn.classList.add("pulse");
             moreDefBtn.disabled = false;
             otherArr.forEach((others) => {
-                moreDef.innerHTML = "";
-                moreDef.appendChild(createHtmlWithContent("p", others));
+                otherDefs.appendChild(createHtmlWithContent("p", others));
             });
-            moreDefBtn.classList.add("pulse");
+
             moreDefBtn.addEventListener("click", () => {
                 if (moreDefBtn.classList.contains("pulse")) {
                     moreDefBtn.classList.remove("pulse");
+                    wordInfo.classList.add("show");
                 } else {
                     moreDefBtn.classList.add("pulse");
+                    wordInfo.classList.remove("show");
                 }
             });
         }
