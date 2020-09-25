@@ -1,7 +1,6 @@
 // this file contains all dictionary words arrays needed
 //url format : https://www.dictionaryapi.com/api/v3/references/collegiate/json/(WORD TO FIND)?key= API-KEY
 const inputWord = document.querySelector(".word-input");
-let word = "come";
 const url = "https://www.dictionaryapi.com/api/v3/references/";
 const thes = "thesaurus/json";
 const colg = "collegiate/json";
