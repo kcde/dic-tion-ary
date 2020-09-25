@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;600;700&display=swap");
 :root {
     --clr-light-gray: #d1d2d4;
     --clr-gray: #636262;
@@ -36,7 +36,6 @@ input {
     outline: none;
 }
 p {
-    font-weight: 400;
     font-size: 14px;
 }
 h1 {
@@ -152,6 +151,10 @@ h3 {
     font-weight: 600;
     letter-spacing: 0.1rem;
 }
+.definitions {
+    font-weight: 300;
+}
+
 .definition-others {
     height: 0rem;
     opacity: 0;

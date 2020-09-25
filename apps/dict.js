@@ -1,24 +1,19 @@
 // this file contains all dictionary words arrays needed
 //url format : https://www.dictionaryapi.com/api/v3/references/collegiate/json/(WORD TO FIND)?key= API-KEY
 const inputWord = document.querySelector(".word-input");
-let word = "lack";
+let word = "come";
 const url = "https://www.dictionaryapi.com/api/v3/references/";
 const thes = "thesaurus/json";
 const colg = "collegiate/json";
 const thesApiKey = "33ef45f2-1295-489b-8a06-e195492e8b94";
 const colgApiKey = "5ac2886b-89ca-47f0-813c-f82354fa6a7e";
 
-// endpoint for thesaurus request
-let thesEndpoint = url + thes + "/" + word + "?key=" + thesApiKey;
-
-// endpoint for collegiate request
-let colgEndpoint = url + colg + "/" + word + "?key=" + colgApiKey;
-
-console.log(thesEndpoint);
-console.log(colgEndpoint);
-
 // aync reuest for thesaurus
 const thesReq = async () => {
+    // endpoint for thesaurus request
+    let thesEndpoint =
+        url + thes + "/" + inputWord.value + "?key=" + thesApiKey;
+
     try {
         const response = await fetch(thesEndpoint);
         if (response.ok) {
@@ -33,6 +28,9 @@ const thesReq = async () => {
 
 // async request for dictionary
 const dictReq = async () => {
+    // endpoint for collegiate request
+    let colgEndpoint =
+        url + colg + "/" + inputWord.value + "?key=" + colgApiKey;
     try {
         const response = await fetch(colgEndpoint);
         if (response.ok) {
@@ -42,6 +40,12 @@ const dictReq = async () => {
     } catch (error) {
         console.log(error);
     }
+};
+
+// getting name
+const getWord = (defArr) => {
+    const word = defArr[0].meta.id;
+    return word;
 };
 
 // getting the parts of speech
@@ -71,7 +75,7 @@ const getSyns = (defArr) => {
 // getting array of antonyms
 const getAnts = (defArr) => {
     const antArr = [];
-    defArr[0].meta.ants[0].forEach((ant) => {
+    defArr[0].meta.ants.forEach((ant) => {
         antArr.push(ant);
     });
     return antArr;
@@ -88,8 +92,3 @@ const getExamples = (defArr) => {
     const exaArr = defArr[0].def[0].sseq[0][0][1].dt[1][1];
     return exaArr;
 };
-
-thesReq().then((r) => {
-    g = getExamples(r);
-    // console.log(g);
-});
