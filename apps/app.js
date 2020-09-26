@@ -1,6 +1,8 @@
 const theWord = document.querySelector(".the-word");
 
 const thePos = document.querySelector(".pos");
+
+const defothers = document.querySelector(".definition-others");
 const defInitial = document.querySelector(".definition-initial");
 const otherDefs = document.querySelector(".other-defs");
 const example = document.querySelector(".example");
@@ -68,7 +70,7 @@ const renderDef = () => {
                 otherDefs.appendChild(createHtmlWithContent("p", others));
             });
         } else {
-            otherDefs.innerHTML = "";
+            otherDefs.innerHTML = "NO EXTRA DEFINITION";
             moreDefBtn.classList.remove("pulse");
         }
     });

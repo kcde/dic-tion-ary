@@ -198,7 +198,7 @@ h3 {
 }
 
 .show .definition-others {
-  height: 12rem;
+  height: 10rem;
   opacity: 1;
   -webkit-transform: translateY(0rem);
           transform: translateY(0rem);
