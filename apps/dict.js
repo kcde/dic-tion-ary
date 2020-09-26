@@ -14,7 +14,7 @@ const thesReq = async () => {
         url + thes + "/" + inputWord.value + "?key=" + thesApiKey;
 
     try {
-        const response = await fetch(thesEndpoint);
+        const response = await fetch(thesEndpoint, { cache: "no-cache" });
         if (response.ok) {
             const jsonResponse = await response.json();
             return jsonResponse;
@@ -31,7 +31,7 @@ const dictReq = async () => {
     let colgEndpoint =
         url + colg + "/" + inputWord.value + "?key=" + colgApiKey;
     try {
-        const response = await fetch(colgEndpoint);
+        const response = await fetch(colgEndpoint, { cache: "no-cache" });
         if (response.ok) {
             const jsonResponse = await response.json();
             return jsonResponse;

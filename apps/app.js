@@ -1,4 +1,5 @@
 const theWord = document.querySelector(".the-word");
+
 const thePos = document.querySelector(".pos");
 const defInitial = document.querySelector(".definition-initial");
 const otherDefs = document.querySelector(".other-defs");
@@ -10,7 +11,6 @@ const moreDefBtn = document.querySelector(".more-definition");
 const wordInfo = document.querySelector(".word-info");
 const searchBar = document.querySelector(".search-bar");
 const searchBtn = document.querySelector(".search-btn");
-moreDefBtn.disabled = true;
 
 const clearAll = () => {
     theWord.innerHTML = "";
@@ -19,7 +19,7 @@ const clearAll = () => {
     otherDefs.innerHTML = "";
     moreDefBtn.classList.remove("pulse");
     pronunciation.innerHTML = "";
-    // example.innerHTML = '';
+    example.innerHTML = "";
     synonyms.innerHTML = "";
     antonyms.innerHTML = "";
 };
@@ -60,22 +60,16 @@ const renderDef = () => {
         let defArr = getDefs(objArr);
         defInitial.innerHTML = `<p>${defArr[0]}</p>`;
         console.log(defArr);
+
         if (defArr.length > 1) {
             const otherArr = defArr.slice(1);
-
+            moreDefBtn.classList.add("pulse");
             otherArr.forEach((others) => {
                 otherDefs.appendChild(createHtmlWithContent("p", others));
             });
-            // moreDefBtn.disabled = false;
-            moreDefBtn.classList.add("pulse");
-            moreDefBtn.disabled = false;
-            moreDefBtn.addEventListener("click", () => {
-                moreDefBtn.classList.toggle("pulse");
-                wordInfo.classList.toggle("show");
-            });
         } else {
             otherDefs.innerHTML = "";
-            moreDefBtn.disabled = true;
+            moreDefBtn.classList.remove("pulse");
         }
     });
 };
@@ -141,13 +135,14 @@ const renderAnts = () => {
 //rendering all render functions
 const renderAll = () => {
     renderWord();
-    renderExa();
     renderPos();
     renderPro();
     renderDef();
     renderExa();
     renderSyns();
     renderAnts();
+
+    inputWord.value = "";
 };
 
 /* ::::::::::::::::::::::::::::::::::::::::::: */
@@ -155,13 +150,16 @@ const renderAll = () => {
 //event listener for submit button
 searchBar.addEventListener("submit", (e) => {
     e.preventDefault();
-    wordInfo.classList.remove("show");
     clearAll(); // clear all content whenever the submit button is click
-
+    wordInfo.classList.remove("show");
     if (inputWord.value === null) {
         return;
     }
 
     renderAll();
-    inputWord.value = "";
+});
+
+moreDefBtn.addEventListener("click", () => {
+    moreDefBtn.classList.toggle("pulse");
+    wordInfo.classList.toggle("show");
 });
